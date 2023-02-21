@@ -1,23 +1,16 @@
 package com.rpap.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.rpap.taskmaster.R;
-import com.rpap.taskmaster.database.taskMasterDatabase;
 import com.rpap.taskmaster.model.task;
 
 public class AddTaskActivity extends AppCompatActivity {
-    taskMasterDatabase taskMasterDatabase;
+
 
     Spinner taskStatusSpinner;
 
@@ -26,25 +19,10 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         taskStatusSpinner = findViewById(R.id.taskStatusSpinner);
-        taskMasterDatabase = Room.databaseBuilder(
-                        getApplicationContext(),
-                        taskMasterDatabase.class,
-                        MainActivity.DATABASE_NAME)
-                .fallbackToDestructiveMigration() //DO NOT USE IN PRODUCTION
-                .allowMainThreadQueries()
-                .build();
+
 
         setUpStatusSpinner();
         setUpSaveButton();
-
-//        Button addTaskButton = (Button) findViewById(R.id.addTaskActivityAddTaskButton);
-//        addTaskButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                TextView submittedTextView = (TextView) findViewById(R.id.addTaskActivitySubmittedText);
-//                submittedTextView.setVisibility(View.VISIBLE);
-//            }
-//        });
     }
 
     public void setUpStatusSpinner() {
@@ -62,7 +40,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     ((EditText)findViewById(R.id.addTaskActivityTaskDescriptionInput)).getText().toString(),
                     task.taskStatusEnum.fromString(taskStatusSpinner.getSelectedItem().toString())
                     );
-            taskMasterDatabase.taskDao().insertATask(newTask);
+//            taskMasterDatabase.taskDao().insertATask(newTask); TODO This is where Amplify calls will go
             Toast.makeText(this, "Task Added!", Toast.LENGTH_SHORT).show();
         });
     }

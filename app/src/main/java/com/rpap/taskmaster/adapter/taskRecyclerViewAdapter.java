@@ -40,12 +40,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull taskViewHolder holder, int position) {
         TextView tasksFragmentTitleView = holder.itemView.findViewById(R.id.tasksFragmentTextViewTitle);
-//        TextView tasksFragmentBodyView = holder.itemView.findViewById(R.id.tasksFragmentTextViewBody);
         TextView tasksFragmentStatusView = holder.itemView.findViewById(R.id.tasksFragmentTextViewStatus);
-
-//        TextView allTasksFragmentTitleView = holderAll.itemView.findViewById(R.id.allTasksFragmentTextViewTitle);
-//        TextView allTasksFragmentBodyView = holderAll.itemView.findViewById(R.id.allTasksFragmentTextViewBody);
-//        TextView allTasksFragmentStatusView = holderAll.itemView.findViewById(R.id.allTasksFragmentTextViewStatus);
 
         task task = taskList.get(position);
 
@@ -54,22 +49,8 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
         String taskStatus = String.valueOf(taskList.get(position).getStatus());
 
         tasksFragmentTitleView.setText((position + 1) + ". " + taskTitle + "\n" + taskStatus);
-//        tasksFragmentBodyView.setText(taskBody);
         tasksFragmentStatusView.setText(taskStatus);
         View taskViewHolder = holder.itemView;
-
-//        allTasksFragmentTitleView.setText((position + 1) + ". " + taskTitle + "\n" + taskBody + "\n" + taskStatus);
-//        allTasksFragmentBodyView.setText(taskBody);
-//        allTasksFragmentStatusView.setText(taskStatus);
-//        View allTaskViewHolder = holder.itemView;
-
-//        allTaskViewHolder.setOnClickListener(v -> {
-//            Intent goToTaskDetailsIntent = new Intent(callingActivity, TaskDetailActivity.class);
-//            goToTaskDetailsIntent.putExtra(TASK_TITLE_TAG, taskTitle);
-//            goToTaskDetailsIntent.putExtra(TASK_BODY_TAG, taskBody);
-//            goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, taskStatus);
-//            callingActivity.startActivity(goToTaskDetailsIntent);
-//        });
 
         taskViewHolder.setOnClickListener(v -> {
             Intent goToTaskDetailsIntent = new Intent(callingActivity, TaskDetailActivity.class);
@@ -91,17 +72,4 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
             super(itemView);
         }
     }
-
-
-//    @Override
-//    public int getItemCountAll() {
-//        return taskList.size();
-//    }
-//
-//    public static class allTaskViewHolder extends RecyclerView.ViewHolder {
-//
-//        public allTaskViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//        }
-//    }
 }
