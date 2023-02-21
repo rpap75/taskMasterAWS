@@ -1,11 +1,6 @@
 package com.rpap.taskmaster.model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-@Entity
 public class task {
-    @PrimaryKey(autoGenerate = true)
     public Long id;
     private String title;
     private String body;

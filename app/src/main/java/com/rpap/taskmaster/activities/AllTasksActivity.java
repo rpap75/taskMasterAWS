@@ -3,15 +3,11 @@ package com.rpap.taskmaster.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
-import com.rpap.taskmaster.database.taskMasterDatabase;
 import com.rpap.taskmaster.model.task;
 
 import java.util.List;
