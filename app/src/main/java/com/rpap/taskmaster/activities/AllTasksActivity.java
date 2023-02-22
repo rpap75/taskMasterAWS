@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
-import com.rpap.taskmaster.model.task;
 
 import java.util.List;
 

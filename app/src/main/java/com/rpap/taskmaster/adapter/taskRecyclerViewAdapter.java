@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.activities.TaskDetailActivity;
-import com.rpap.taskmaster.model.task;
 
 import java.util.List;
 

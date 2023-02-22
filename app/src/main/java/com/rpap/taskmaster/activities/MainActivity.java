@@ -10,19 +10,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
-import com.rpap.taskmaster.model.task;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String TAG = "mainActivity";
 
     List<task> taskList;
     taskRecyclerViewAdapter adapter;
@@ -31,11 +37,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        taskList = new ArrayList<>();
 
-
-        taskList.add(new task("Test 1", "Test1 Test1", task.taskStatusEnum.ASSIGNED));
-        taskList.add(new task("Test 2", "Test2 Test2", task.taskStatusEnum.ASSIGNED));
+        //HARDCODE TEST
+//        taskList = new ArrayList<>();
+//        task newTask = task.builder()
+//                .title("Cool Task")
+//                .body("Awesome and Awesome Stuff")
+//                .status(TaskStatusEnum.Complete)
+//                .build();
+//
+//        taskList.add(newTask);
 
         setupButtons();
         setUpRecyclerView();
@@ -45,8 +56,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//            taskList.addAll(taskMasterDatabase.taskDao().findAll()); TODO This is where Amplify call will go
-        adapter.notifyDataSetChanged();
+        Amplify.API.query(
+                ModelQuery.list(task.class),
+                success -> {
+                    taskList.clear();
+                    Log.i(TAG, "Read Tasks Successfully");
+                    for (task databaseTask : success.getData()) {
+                        taskList.add(databaseTask);
+                    }
+                    runOnUiThread(() -> adapter.notifyDataSetChanged());
+                },
+                failure -> Log.e(TAG, "FAILED to read task from Database")
+        );
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -58,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setUpRecyclerView() {
 
+        taskList = new ArrayList<>();
         RecyclerView tasksRecyclerView = findViewById(R.id.mainActivityRecyclerViewTasks);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         tasksRecyclerView.setLayoutManager(layoutManager);
