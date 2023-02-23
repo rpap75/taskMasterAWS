@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Read Tasks Successfully");
                     for (task databaseTask : success.getData()) {
                         taskList.add(databaseTask);
+                        String selectedTeamName = "red";
+                        if (databaseTask.getTaskTeam() != null) {
+
+
+                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
+                                taskList.add(databaseTask);
+                            }
+                        }
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                 },
