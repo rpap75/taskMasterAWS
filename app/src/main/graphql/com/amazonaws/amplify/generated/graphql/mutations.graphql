@@ -1,4 +1,76 @@
 # this is an auto generated file. This will be overwritten
+mutation CreateTaskTeam(
+  $input: CreateTaskTeamInput!
+  $condition: ModelTaskTeamConditionInput
+) {
+  createTaskTeam(input: $input, condition: $condition) {
+    id
+    name
+    email
+    tasks {
+      items {
+        id
+        title
+        taskTeamId
+        body
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateTaskTeam(
+  $input: UpdateTaskTeamInput!
+  $condition: ModelTaskTeamConditionInput
+) {
+  updateTaskTeam(input: $input, condition: $condition) {
+    id
+    name
+    email
+    tasks {
+      items {
+        id
+        title
+        taskTeamId
+        body
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteTaskTeam(
+  $input: DeleteTaskTeamInput!
+  $condition: ModelTaskTeamConditionInput
+) {
+  deleteTaskTeam(input: $input, condition: $condition) {
+    id
+    name
+    email
+    tasks {
+      items {
+        id
+        title
+        taskTeamId
+        body
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
 mutation CreateTask(
   $input: CreateTaskInput!
   $condition: ModelTaskConditionInput
@@ -6,8 +78,19 @@ mutation CreateTask(
   createTask(input: $input, condition: $condition) {
     id
     title
+    taskTeamId
     body
     status
+    taskTeam {
+      id
+      name
+      email
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -19,8 +102,19 @@ mutation UpdateTask(
   updateTask(input: $input, condition: $condition) {
     id
     title
+    taskTeamId
     body
     status
+    taskTeam {
+      id
+      name
+      email
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
@@ -32,8 +126,19 @@ mutation DeleteTask(
   deleteTask(input: $input, condition: $condition) {
     id
     title
+    taskTeamId
     body
     status
+    taskTeam {
+      id
+      name
+      email
+      tasks {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
     createdAt
     updatedAt
   }
