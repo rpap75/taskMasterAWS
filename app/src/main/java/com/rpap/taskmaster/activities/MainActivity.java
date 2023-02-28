@@ -11,14 +11,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
+import com.rpap.taskmaster.activities.AuthActivites.LoginActivity;
+import com.rpap.taskmaster.activities.AuthActivites.SignUpActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
@@ -38,16 +42,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //HARDCODE TEST
-//        taskList = new ArrayList<>();
-//        task newTask = task.builder()
-//                .title("Cool Task")
-//                .body("Awesome and Awesome Stuff")
-//                .status(TaskStatusEnum.Complete)
-//                .build();
-//
-//        taskList.add(newTask);
-
         setupButtons();
         setUpRecyclerView();
 
@@ -63,14 +57,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Read Tasks Successfully");
                     for (task databaseTask : success.getData()) {
                         taskList.add(databaseTask);
-                        String selectedTeamName = "red";
-                        if (databaseTask.getTaskTeam() != null) {
-
-
-                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
-                                taskList.add(databaseTask);
-                            }
-                        }
+//                        String selectedTeamName = "red";
+//                        if (databaseTask.getTaskTeam() != null) {
+//
+//                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
+//                                taskList.add(databaseTask);
+//                            }
+//                        }
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                 },
@@ -83,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.mainActivityUsernameTextView)).setText(username + "'s");
 
+
+//        SharedPreferences teamSelect = PreferenceManager.getDefaultSharedPreferences(this);
+//
+//        String team = teamSelect.getString(TEAM_TAG, "no team");
+//
+//        ((TextView) findViewById(R.id.mainActivityTeamTextView)).setText(team);
     }
 
     public void setUpRecyclerView() {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupButtons() {
-
+//Add Task
         Button addTaskIntentButton = (Button) findViewById(R.id.mainActivityAddTaskButton);
         addTaskIntentButton.setOnClickListener(v -> {
             Intent goToAddTaskIntent = new Intent(this, AddTaskActivity.class);
@@ -114,5 +113,36 @@ public class MainActivity extends AppCompatActivity {
             Intent goToSettingsIntent = new Intent(this, UserSettingsActivity.class);
             startActivity(goToSettingsIntent);
         });
+
+        Amplify.Auth.getCurrentUser(
+                success -> {
+                    Log.i(TAG, "GotCurrent User");
+                    username.set(success.getUsername());
+                }
+                failure -> {}
+        );
+
+        if (username.equals("")) {
+            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
+            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
+            // hide log out button
+        } else {
+            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
+            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
+        }
+
+        //Login
+        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
+            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
+            startActivity(goToLoginActivityIntent);
+        });
+
+        //Sign Up
+        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
+            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
+            startActivity(goToSignUpActivityIntent);
+        });
+
+
     }
 }
