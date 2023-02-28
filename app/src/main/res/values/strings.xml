@@ -36,4 +36,19 @@
     <string name="allTaskTitle">Title</string>
     <string name="allTaskBody">Body</string>
     <string name="allTaskStatus">Status</string>
+    <string name="mainTeamTextView">team</string>
+    <string name="SignUpTitle">Sign Up</string>
+    <string name="SignUpButton">Sign Up</string>
+    <string name="emailTV">Email</string>
+    <string name="passwordTV">Pasword</string>
+    <string name="emailForm" />
+    <string name="loginTitle">Log In</string>
+    <string name="logInButton">Log In</string>
+    <string name="verifySubmitButton">Submit</string>
+    <string name="confirmationCodeTV">Confirmation Code</string>
+    <string name="signUpTVConfirmationCode">Confirmation Code</string>
+    <string name="verifySignUpTVTitle">Verify Sign Up</string>
+    <string name="nicknameTV">Nickname</string>
+    <string name="mainLogInButton">Log In</string>
+    <string name="mainSignUpButton">Sign Up</string>
 </resources>
