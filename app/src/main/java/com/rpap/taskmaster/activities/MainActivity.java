@@ -1,5 +1,6 @@
 package com.rpap.taskmaster.activities;
 
+import static com.rpap.taskmaster.activities.AuthActivities.SignUpActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -102,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
         ((TextView) findViewById(R.id.mainActivityUsernameTextView)).setText(username + "'s");
         ((TextView)findViewById(R.id.mainActivityTeamTextView)).setText(selectedTeam);
+
+
+        String nickname = preferences.getString(NICKNAME_TAG, "no nickname");
+
+        ((TextView) findViewById(R.id.mainActivityTVNickName)).setText(nickname);
     }
 
     public void setUpRecyclerView() {
@@ -116,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupButtons() {
+        final String[] nickname = {preferences.getString(NICKNAME_TAG, "no nickname")};
         final String[] username = {preferences.getString(USERNAME_TAG, "no username")};
 //Add Task
         Button addTaskIntentButton = (Button) findViewById(R.id.mainActivityAddTaskButton);
@@ -142,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 },
                 failure -> {}
         );
+
 
         if (username[0].equals("")) {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
