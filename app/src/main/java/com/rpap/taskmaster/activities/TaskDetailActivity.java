@@ -25,14 +25,17 @@ public class TaskDetailActivity extends AppCompatActivity {
         String taskTitle = null;
         String taskBody = null;
         String taskStatus = null;
+        String selectedTeam = null;
         if (callingIntent != null) {
             taskTitle = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_TITLE_TAG);
             taskBody = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_BODY_TAG);
             taskStatus = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_STATUS_TAG);
+            selectedTeam = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_TEAM_TAG);
         }
         ((TextView) findViewById(R.id.taskDetailActivityTitle)).setText(taskTitle);
         ((TextView) findViewById(R.id.taskDetailActivityBody)).setText(taskBody);
         ((TextView) findViewById(R.id.taskDetailActivityStatus)).setText(taskStatus);
+        ((TextView) findViewById(R.id.taskDetailActivityTVTeam)).setText(selectedTeam);
     }
 }
 

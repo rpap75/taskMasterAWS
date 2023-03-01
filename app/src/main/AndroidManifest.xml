@@ -12,18 +12,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taskmaster"
         tools:targetApi="31">
+
         <activity
-            android:name=".AuthenticateActivity"
+            android:name=".activities.AuthActivities.VerifySignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".VerifySignUpActivity"
+            android:name=".activities.AuthActivities.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
+            android:name=".activities.AuthActivities.LoginActivity"
+            android:exported="true" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.LOGIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
         <activity
             android:name=".activities.UserSettingsActivity"
             android:exported="false" />
@@ -38,12 +42,11 @@
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:exported="true" >
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
 
         <meta-data

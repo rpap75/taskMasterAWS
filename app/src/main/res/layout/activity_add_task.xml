@@ -95,5 +95,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/addTaskImagePicker"
+        android:layout_width="63dp"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/amplify_storage_transfer_notification_icon"
+        tools:layout_editor_absoluteX="316dp"
+        tools:layout_editor_absoluteY="6dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
