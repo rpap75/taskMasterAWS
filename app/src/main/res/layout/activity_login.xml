@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AuthActivites.LoginActivity">
+    tools:context=".activities.AuthActivities.LoginActivity">
 
     <TextView
         android:id="@+id/loginActivityTVEmail"
@@ -62,7 +62,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logInActivityEmailForm" />
 
     <Button
-        android:id="@+id/logInActivitySignUpButton"
+        android:id="@+id/logInActivityLogInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="264dp"
@@ -70,6 +70,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/logInActivitySignUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginBottom="152dp"
+        android:text="@string/signUpButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

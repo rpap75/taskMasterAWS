@@ -10,8 +10,8 @@ android {
         applicationId "com.rpap.taskmaster"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +29,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.amplifyframework:aws-storage-s3:2.2.2'
     implementation 'com.amplifyframework:aws-auth-cognito:2.2.2'
     implementation 'com.amplifyframework:aws-api:2.2.2'
     implementation 'com.amplifyframework:aws-datastore:2.2.2'

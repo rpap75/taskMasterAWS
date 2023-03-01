@@ -20,7 +20,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     public static final String TASK_TITLE_TAG = "task_title";
     public static final String TASK_BODY_TAG = "task_body";
     public static final String TASK_STATUS_TAG = "task_status";
-
+    public static final String TASK_TEAM_TAG = "task_team";
     Context callingActivity;
 
     List<task> taskList;
@@ -47,6 +47,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
         String taskTitle = taskList.get(position).getTitle();
         String taskBody = taskList.get(position).getBody();
         String taskStatus = String.valueOf(taskList.get(position).getStatus());
+        String taskTeam = String.valueOf(taskList.get(position).getTaskTeam().getName());
 
         tasksFragmentTitleView.setText((position + 1) + ". " + taskTitle + "\n" + taskStatus);
         tasksFragmentStatusView.setText(taskStatus);
@@ -57,6 +58,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
             goToTaskDetailsIntent.putExtra(TASK_TITLE_TAG, taskTitle);
             goToTaskDetailsIntent.putExtra(TASK_BODY_TAG, taskBody);
             goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, taskStatus);
+            goToTaskDetailsIntent.putExtra(TASK_TEAM_TAG, taskTeam);
             callingActivity.startActivity(goToTaskDetailsIntent);
         });
     }

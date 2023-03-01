@@ -17,15 +17,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
-import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
-import com.rpap.taskmaster.activities.AuthActivites.LoginActivity;
-import com.rpap.taskmaster.activities.AuthActivites.SignUpActivity;
+import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
+import com.rpap.taskmaster.activities.AuthActivities.SignUpActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "mainActivity";
+    public static final String TASK_INPUT_EXTRA_TAG = "userTask";
+    public static final String SELECT_TEAM_TAG = "selectTeam";
+
+    SharedPreferences preferences;
 
     List<task> taskList;
     taskRecyclerViewAdapter adapter;
@@ -42,14 +48,36 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
         setupButtons();
         setUpRecyclerView();
 
-    }
+       //manual file upload to s3
+            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
+                writer.append("Example file contents");
+                writer.close();
+            } catch (Exception exception) {
+                Log.e("MyAmplifyApp", "Upload failed", exception);
+            }
+
+            Amplify.Storage.uploadFile(
+                    "ExampleKey",
+                    exampleFile,
+                    success -> Log.i("MyAmplifyApp", "Successfully uploaded: " + success.getKey()),
+                   failure -> Log.e("MyAmplifyApp", "Upload failed", failure)
+            );
+        }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        String selectedTeam = preferences.getString(SELECT_TEAM_TAG, "No team selected");
+
         Amplify.API.query(
                 ModelQuery.list(task.class),
                 success -> {
@@ -57,31 +85,23 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Read Tasks Successfully");
                     for (task databaseTask : success.getData()) {
                         taskList.add(databaseTask);
-//                        String selectedTeamName = "red";
-//                        if (databaseTask.getTaskTeam() != null) {
-//
-//                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
-//                                taskList.add(databaseTask);
-//                            }
-//                        }
+                        String selectedTeamName = selectedTeam;
+                        if (databaseTask.getTaskTeam() != null) {
+                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
+                                taskList.add(databaseTask);
+                            }
+                        }
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                 },
-                failure -> Log.e(TAG, "FAILED to read task from Database")
+                failure -> Log.e(TAG, "FAILED to read task from Database" + failure)
         );
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         String username = preferences.getString(USERNAME_TAG, "no username");
 
         ((TextView) findViewById(R.id.mainActivityUsernameTextView)).setText(username + "'s");
-
-
-//        SharedPreferences teamSelect = PreferenceManager.getDefaultSharedPreferences(this);
-//
-//        String team = teamSelect.getString(TEAM_TAG, "no team");
-//
-//        ((TextView) findViewById(R.id.mainActivityTeamTextView)).setText(team);
+        ((TextView)findViewById(R.id.mainActivityTeamTextView)).setText(selectedTeam);
     }
 
     public void setUpRecyclerView() {
@@ -96,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupButtons() {
+        final String[] username = {preferences.getString(USERNAME_TAG, "no username")};
 //Add Task
         Button addTaskIntentButton = (Button) findViewById(R.id.mainActivityAddTaskButton);
         addTaskIntentButton.setOnClickListener(v -> {
@@ -116,13 +137,13 @@ public class MainActivity extends AppCompatActivity {
 
         Amplify.Auth.getCurrentUser(
                 success -> {
-                    Log.i(TAG, "GotCurrent User");
-                    username.set(success.getUsername());
-                }
+                    Log.i(TAG, "Got Current User");
+                    username[0] = success.getUsername();
+                },
                 failure -> {}
         );
 
-        if (username.equals("")) {
+        if (username[0].equals("")) {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
             ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
             // hide log out button

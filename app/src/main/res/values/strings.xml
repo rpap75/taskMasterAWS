@@ -40,7 +40,7 @@
     <string name="SignUpTitle">Sign Up</string>
     <string name="SignUpButton">Sign Up</string>
     <string name="emailTV">Email</string>
-    <string name="passwordTV">Pasword</string>
+    <string name="passwordTV">Password</string>
     <string name="emailForm" />
     <string name="loginTitle">Log In</string>
     <string name="logInButton">Log In</string>
@@ -51,4 +51,8 @@
     <string name="nicknameTV">Nickname</string>
     <string name="mainLogInButton">Log In</string>
     <string name="mainSignUpButton">Sign Up</string>
+    <string name="userSettingNoInput">no_input</string>
+    <string name="TVTeam">Team</string>
+    <string name="signUpButton">Sign Up</string>
+    <string name="nickNameTV">NickName</string>
 </resources>

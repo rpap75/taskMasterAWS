@@ -5,7 +5,7 @@
     android:id="@+id/SignUpActivityPasswordForm"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.AuthActivites.SignUpActivity">
+    tools:context=".activities.AuthActivities.SignUpActivity">
 
     <TextView
         android:id="@+id/signUpActivityTVEmail"
@@ -78,21 +78,16 @@
         android:id="@+id/signUpActivityTVNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd=""
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="316dp"
         android:text="@string/nicknameTV"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/SignUpPasswordForm"
-        app:layout_constraintHorizontal_bias="0.782"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpActivityTVEmail"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/signUpActivityNicknameFormForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop=""
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
