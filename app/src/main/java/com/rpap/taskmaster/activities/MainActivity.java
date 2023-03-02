@@ -54,23 +54,23 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         setUpRecyclerView();
 
-       //manual file upload to s3
-            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
-
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-                writer.append("Example file contents");
-                writer.close();
-            } catch (Exception exception) {
-                Log.e("MyAmplifyApp", "Upload failed", exception);
-            }
-
-            Amplify.Storage.uploadFile(
-                    "ExampleKey",
-                    exampleFile,
-                    success -> Log.i("MyAmplifyApp", "Successfully uploaded: " + success.getKey()),
-                   failure -> Log.e("MyAmplifyApp", "Upload failed", failure)
-            );
+//       //manual file upload to s3
+//            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
+//
+//            try {
+//                BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
+//                writer.append("Example file contents");
+//                writer.close();
+//            } catch (Exception exception) {
+//                Log.e("MyAmplifyApp", "Upload failed", exception);
+//            }
+//
+//            Amplify.Storage.uploadFile(
+//                    "ExampleKey",
+//                    exampleFile,
+//                    success -> Log.i("MyAmplifyApp", "Successfully uploaded: " + success.getKey()),
+//                   failure -> Log.e("MyAmplifyApp TEST", "Upload failed", failure)
+//            );
         }
 
     @Override
@@ -151,13 +151,25 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
+//        logoutButton.setOnClickListener(v -> {
+//            Amplify.Auth.signOut(
+//                    success -> {
+//                        Log.i(TAG, "User successfully logged out.");
+//                        authUser = null;
+//                        runOnUiThread(this::renderButtons);
+//                    }
+//            );
+//        });
+
         if (username[0].equals("")) {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
             ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
+            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
             // hide log out button
         } else {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
             ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
+            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
         }
 
         //Login

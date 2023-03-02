@@ -21,6 +21,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     public static final String TASK_BODY_TAG = "task_body";
     public static final String TASK_STATUS_TAG = "task_status";
     public static final String TASK_TEAM_TAG = "task_team";
+    public static final String TASK_IMAGE_KEY_TAG = "task_image_key";
     Context callingActivity;
 
     List<task> taskList;
@@ -44,21 +45,25 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
 
         task task = taskList.get(position);
 
-        String taskTitle = taskList.get(position).getTitle();
-        String taskBody = taskList.get(position).getBody();
-        String taskStatus = String.valueOf(taskList.get(position).getStatus());
-        String taskTeam = String.valueOf(taskList.get(position).getTaskTeam().getName());
+//        String taskTitle = taskList.get(position).getTitle();
+//        String taskBody = taskList.get(position).getBody();
+//        String taskStatus = String.valueOf(taskList.get(position).getStatus());
+//        String taskTeam = String.valueOf(taskList.get(position).getTaskTeam().getName());
+//        String taskImage = String.valueOf(taskList.get(position).task.getS3ImageKey());
 
-        tasksFragmentTitleView.setText((position + 1) + ". " + taskTitle + "\n" + taskStatus);
-        tasksFragmentStatusView.setText(taskStatus);
+        tasksFragmentTitleView.setText((position + 1) + ". " + task.getTitle() + "\n" + task.getTaskTeam()
+        );
+//        tasksFragmentStatusView.setText(taskStatus);
         View taskViewHolder = holder.itemView;
 
         taskViewHolder.setOnClickListener(v -> {
             Intent goToTaskDetailsIntent = new Intent(callingActivity, TaskDetailActivity.class);
-            goToTaskDetailsIntent.putExtra(TASK_TITLE_TAG, taskTitle);
-            goToTaskDetailsIntent.putExtra(TASK_BODY_TAG, taskBody);
-            goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, taskStatus);
-            goToTaskDetailsIntent.putExtra(TASK_TEAM_TAG, taskTeam);
+            goToTaskDetailsIntent.putExtra(TASK_TITLE_TAG, task.getTitle());
+            goToTaskDetailsIntent.putExtra(TASK_BODY_TAG, task.getBody());
+            goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, task.getStatus());
+            goToTaskDetailsIntent.putExtra(TASK_TEAM_TAG, task.getTaskTeam().getName());
+            goToTaskDetailsIntent.putExtra(TASK_IMAGE_KEY_TAG, task.getS3ImageKey());
+
             callingActivity.startActivity(goToTaskDetailsIntent);
         });
     }
