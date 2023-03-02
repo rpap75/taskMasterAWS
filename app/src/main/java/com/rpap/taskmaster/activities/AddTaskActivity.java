@@ -187,6 +187,7 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     public void launchImageSelectionIntent() {
+
         Intent imageFilePickingIntent = new Intent(Intent.ACTION_GET_CONTENT);
         imageFilePickingIntent.setType("*/*");
         imageFilePickingIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png"});
@@ -218,7 +219,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void uploadInputStreamToS3(InputStream pickedImageInputStream, String
             pickedImageFileName, Uri pickedImageFileUri) {
-//        findViewById(R.id.addTaskActivityAddTaskButton).setOnClickListener(v -> {
             Amplify.Storage.uploadInputStream(
                     pickedImageFileName,
                     pickedImageInputStream,
@@ -236,7 +236,6 @@ public class AddTaskActivity extends AppCompatActivity {
                     },
                     failure -> Log.e(TAG, "Failed To Upload File To S3 with Filename: " + pickedImageFileName + " with error: " + failure)
             );
-//        });
     }
 
     @SuppressLint("Range")
