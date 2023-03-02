@@ -151,7 +151,7 @@ public class AddTaskActivity extends AppCompatActivity {
     //        Button addTaskButton = (Button) findViewById(R.id.addTaskActivityAddTaskButton);
 
     public void saveTask() {
-//        findViewById(R.id.addTaskActivityAddTaskButton).setOnClickListener(v -> {
+        findViewById(R.id.addTaskActivityAddTaskButton).setOnClickListener(v -> {
             String selectedTaskTeamStringName = taskTeamSpinner.getSelectedItem().toString();
             try {
                 taskTeamArrayList = (ArrayList<taskTeam>) taskTeamFuture.get();
@@ -176,7 +176,7 @@ public class AddTaskActivity extends AppCompatActivity {
             );
 
             Toast.makeText(this, "Task Added!", Toast.LENGTH_SHORT).show();
-//        });
+        });
 
     }
 
@@ -218,7 +218,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void uploadInputStreamToS3(InputStream pickedImageInputStream, String
             pickedImageFileName, Uri pickedImageFileUri) {
-        findViewById(R.id.addTaskActivityAddTaskButton).setOnClickListener(v -> {
+//        findViewById(R.id.addTaskActivityAddTaskButton).setOnClickListener(v -> {
             Amplify.Storage.uploadInputStream(
                     pickedImageFileName,
                     pickedImageInputStream,
@@ -236,7 +236,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     },
                     failure -> Log.e(TAG, "Failed To Upload File To S3 with Filename: " + pickedImageFileName + " with error: " + failure)
             );
-        });
+//        });
     }
 
     @SuppressLint("Range")

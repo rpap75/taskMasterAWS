@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         setUpRecyclerView();
 
-//       //manual file upload to s3
+       //manual file upload to s3
 //            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
 //
 //            try {
@@ -164,12 +164,12 @@ public class MainActivity extends AppCompatActivity {
         if (username[0].equals("")) {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
             ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
-            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
+//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
             // hide log out button
         } else {
             ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
             ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
-            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
+//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
         }
 
         //Login

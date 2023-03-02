@@ -22,11 +22,7 @@
         <activity
             android:name=".activities.AuthActivities.LoginActivity"
             android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.LOGIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activities.UserSettingsActivity"
