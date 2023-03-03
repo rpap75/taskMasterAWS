@@ -73,7 +73,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         if (userInputString != null) {
             userInputTextView.setText(userInputString);
         } else {
-            userInputTextView.setText(R.string.userSettingNoInput);
+            userInputTextView.setText(R.string.usernameTextView);
         }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);

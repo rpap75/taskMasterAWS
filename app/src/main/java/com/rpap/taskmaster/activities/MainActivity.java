@@ -2,6 +2,7 @@ package com.rpap.taskmaster.activities;
 
 import static com.rpap.taskmaster.activities.AuthActivities.SignUpActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
+import static com.rpap.taskmaster.adapter.taskRecyclerViewAdapter.TASK_LOCATION_TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,23 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         setUpRecyclerView();
 
-       //manual file upload to s3
-//            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
-//
-//            try {
-//                BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-//                writer.append("Example file contents");
-//                writer.close();
-//            } catch (Exception exception) {
-//                Log.e("MyAmplifyApp", "Upload failed", exception);
-//            }
-//
-//            Amplify.Storage.uploadFile(
-//                    "ExampleKey",
-//                    exampleFile,
-//                    success -> Log.i("MyAmplifyApp", "Successfully uploaded: " + success.getKey()),
-//                   failure -> Log.e("MyAmplifyApp TEST", "Upload failed", failure)
-//            );
         }
 
     @Override
@@ -105,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         String nickname = preferences.getString(NICKNAME_TAG, "no nickname");
-
         ((TextView) findViewById(R.id.mainActivityTVNickName)).setText(nickname);
     }
 

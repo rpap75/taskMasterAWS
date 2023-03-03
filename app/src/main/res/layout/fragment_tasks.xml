@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayoutTitleStatus"
     android:layout_width="400dp"
-    android:layout_height="64dp"
+    android:layout_height="80dp"
     android:layout_marginStart="5dp"
     android:layout_marginTop="20dp"
-    android:background="#CD90CAF9"
+    android:background="#4FC3F7"
     tools:context=".fragments.taskFragmentTitleStatus">
 
     <!--    <TextView-->
@@ -23,25 +23,25 @@
 
     <TextView
         android:id="@+id/tasksFragmentTextViewTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_width="106dp"
+        android:layout_height="66dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/alfa_slab_one"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="@string/fragmentTitle"
-        android:textColor="#9575CD"
-        android:textSize="24sp"
-        tools:textStyle="bold" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tasksFragmentTextViewStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
+        android:layout_width="129dp"
+        android:layout_height="80dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/alfa_slab_one"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="@string/taskFragStatus"
-        android:textColor="#9575CD"
-        android:textSize="24sp"
-        tools:textStyle="bold" />
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </FrameLayout>

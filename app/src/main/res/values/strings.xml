@@ -56,4 +56,5 @@
     <string name="signUpButton">Sign Up</string>
     <string name="nickNameTV">NickName</string>
     <string name="logOutButton">Log Out</string>
+    <string name="locationTV">Location</string>
 </resources>

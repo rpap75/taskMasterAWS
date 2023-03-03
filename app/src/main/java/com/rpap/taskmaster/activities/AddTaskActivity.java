@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
@@ -59,6 +60,8 @@ import java.util.concurrent.ExecutionException;
 public class AddTaskActivity extends AppCompatActivity {
     public final static String TAG = "AddATaskActivity";
     private String s3ImageKey = "";
+
+    private String taskLocationKey = "";
     Spinner taskStatusSpinner;
     Spinner taskTeamSpinner;
 
@@ -215,12 +218,13 @@ public class AddTaskActivity extends AppCompatActivity {
                                     1)
                             .get(0)
                             .getAddressLine(0);
+                    taskLocationKey = address;
                     Log.i(TAG, "Repeating Current Location is: " + address);
 
                 } catch (IOException ioe) {
                     Log.i(TAG, "Could Not Get Location: " + ioe);
                 }
-
+                    //intent here
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -267,13 +271,13 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         taskTeam selectedTeam = taskTeamArrayList.stream().filter(team -> team.getName().equals(selectedTaskTeamStringName)).findAny().orElseThrow(RuntimeException::new);
-
         task newTask = task.builder()
                 .title(((EditText) findViewById(R.id.addTaskActivityTaskTitleInput)).getText().toString())
                 .body(((EditText) findViewById(R.id.addTaskActivityTaskDescriptionInput)).getText().toString())
                 .status((TaskStatusEnum) taskStatusSpinner.getSelectedItem())
                 .taskTeam(selectedTeam)
                 .s3ImageKey(s3ImageKey)
+                .taskLocation(taskLocationKey)
                 .build();
 
         Amplify.API.mutate(
