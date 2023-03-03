@@ -129,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
             Intent goToAddTaskIntent = new Intent(this, AddTaskActivity.class);
             startActivity(goToAddTaskIntent);
         });
-        Button allTasksIntentButton = (Button) findViewById(R.id.mainActivityAllTasksButton);
-        allTasksIntentButton.setOnClickListener(v -> {
-            Intent goToAllTasksIntent = new Intent(this, AllTasksActivity.class);
-            startActivity(goToAllTasksIntent);
-        });
+//        Button allTasksIntentButton = (Button) findViewById(R.id.mainActivityAllTasksButton);
+//        allTasksIntentButton.setOnClickListener(v -> {
+//            Intent goToAllTasksIntent = new Intent(this, AllTasksActivity.class);
+//            startActivity(goToAllTasksIntent);
+//        });
 
         ImageView settingsButton = (ImageView) findViewById(R.id.mainActivitySettingsImageView);
         settingsButton.setOnClickListener(v -> {
@@ -160,28 +160,28 @@ public class MainActivity extends AppCompatActivity {
 //            );
 //        });
 
-        if (username[0].equals("")) {
-            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
-            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
-//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
-            // hide log out button
-        } else {
-            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
-            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
-//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
-        }
-
-        //Login
-        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
-            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
-            startActivity(goToLoginActivityIntent);
-        });
-
-        //Sign Up
-        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
-            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
-            startActivity(goToSignUpActivityIntent);
-        });
+//        if (username[0].equals("")) {
+//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
+//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
+////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
+//            // hide log out button
+//        } else {
+//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
+//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
+////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
+//        }
+//
+//        //Login
+//        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
+//            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
+//            startActivity(goToLoginActivityIntent);
+//        });
+//
+//        //Sign Up
+//        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
+//            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
+//            startActivity(goToSignUpActivityIntent);
+//        });
 
 
     }
