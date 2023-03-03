@@ -26,6 +26,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     String taskStatus = null;
     String selectedTeam = null;
     String taskImageKey = null;
+    String taskLocation = null;
 
 
     @Override
@@ -56,11 +57,13 @@ public class TaskDetailActivity extends AppCompatActivity {
             taskStatus = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_STATUS_TAG);
             selectedTeam = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_TEAM_TAG);
             taskImageKey = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_IMAGE_KEY_TAG);
+            taskLocation = callingIntent.getStringExtra(taskRecyclerViewAdapter.TASK_LOCATION_TAG);
         }
         ((TextView) findViewById(R.id.taskDetailActivityTitle)).setText(taskTitle);
         ((TextView) findViewById(R.id.taskDetailActivityBody)).setText(taskBody);
         ((TextView) findViewById(R.id.taskDetailActivityStatus)).setText(taskStatus);
         ((TextView) findViewById(R.id.taskDetailActivityTVTeam)).setText(selectedTeam);
+        ((TextView) findViewById(R.id.taskDetailActivityLocationTV)).setText(taskLocation);
     }
 }
 

@@ -2,6 +2,7 @@ package com.rpap.taskmaster.activities;
 
 import static com.rpap.taskmaster.activities.AuthActivities.SignUpActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
+import static com.rpap.taskmaster.adapter.taskRecyclerViewAdapter.TASK_LOCATION_TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,23 +55,6 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         setUpRecyclerView();
 
-       //manual file upload to s3
-//            File exampleFile = new File(getApplicationContext().getFilesDir(), "ExampleKey");
-//
-//            try {
-//                BufferedWriter writer = new BufferedWriter(new FileWriter(exampleFile));
-//                writer.append("Example file contents");
-//                writer.close();
-//            } catch (Exception exception) {
-//                Log.e("MyAmplifyApp", "Upload failed", exception);
-//            }
-//
-//            Amplify.Storage.uploadFile(
-//                    "ExampleKey",
-//                    exampleFile,
-//                    success -> Log.i("MyAmplifyApp", "Successfully uploaded: " + success.getKey()),
-//                   failure -> Log.e("MyAmplifyApp TEST", "Upload failed", failure)
-//            );
         }
 
     @Override
@@ -85,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     taskList.clear();
                     Log.i(TAG, "Read Tasks Successfully");
                     for (task databaseTask : success.getData()) {
-                        taskList.add(databaseTask);
                         String selectedTeamName = selectedTeam;
                         if (databaseTask.getTaskTeam() != null) {
                             if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
@@ -106,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         String nickname = preferences.getString(NICKNAME_TAG, "no nickname");
-
         ((TextView) findViewById(R.id.mainActivityTVNickName)).setText(nickname);
     }
 
@@ -130,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
             Intent goToAddTaskIntent = new Intent(this, AddTaskActivity.class);
             startActivity(goToAddTaskIntent);
         });
-        Button allTasksIntentButton = (Button) findViewById(R.id.mainActivityAllTasksButton);
-        allTasksIntentButton.setOnClickListener(v -> {
-            Intent goToAllTasksIntent = new Intent(this, AllTasksActivity.class);
-            startActivity(goToAllTasksIntent);
-        });
+//        Button allTasksIntentButton = (Button) findViewById(R.id.mainActivityAllTasksButton);
+//        allTasksIntentButton.setOnClickListener(v -> {
+//            Intent goToAllTasksIntent = new Intent(this, AllTasksActivity.class);
+//            startActivity(goToAllTasksIntent);
+//        });
 
         ImageView settingsButton = (ImageView) findViewById(R.id.mainActivitySettingsImageView);
         settingsButton.setOnClickListener(v -> {
@@ -161,28 +143,28 @@ public class MainActivity extends AppCompatActivity {
 //            );
 //        });
 
-        if (username[0].equals("")) {
-            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
-            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
-//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
-            // hide log out button
-        } else {
-            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
-            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
-//            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
-        }
-
-        //Login
-        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
-            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
-            startActivity(goToLoginActivityIntent);
-        });
-
-        //Sign Up
-        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
-            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
-            startActivity(goToSignUpActivityIntent);
-        });
+//        if (username[0].equals("")) {
+//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
+//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
+////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
+//            // hide log out button
+//        } else {
+//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
+//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
+////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
+//        }
+//
+//        //Login
+//        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
+//            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
+//            startActivity(goToLoginActivityIntent);
+//        });
+//
+//        //Sign Up
+//        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
+//            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
+//            startActivity(goToSignUpActivityIntent);
+//        });
 
 
     }

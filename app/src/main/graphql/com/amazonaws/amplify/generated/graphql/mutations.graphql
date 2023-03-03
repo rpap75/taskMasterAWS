@@ -15,6 +15,7 @@ mutation CreateTaskTeam(
         body
         status
         s3ImageKey
+        taskLocation
         createdAt
         updatedAt
       }
@@ -40,6 +41,7 @@ mutation UpdateTaskTeam(
         body
         status
         s3ImageKey
+        taskLocation
         createdAt
         updatedAt
       }
@@ -65,6 +67,7 @@ mutation DeleteTaskTeam(
         body
         status
         s3ImageKey
+        taskLocation
         createdAt
         updatedAt
       }
@@ -95,6 +98,7 @@ mutation CreateTask(
       updatedAt
     }
     s3ImageKey
+    taskLocation
     createdAt
     updatedAt
   }
@@ -120,6 +124,7 @@ mutation UpdateTask(
       updatedAt
     }
     s3ImageKey
+    taskLocation
     createdAt
     updatedAt
   }
@@ -145,6 +150,7 @@ mutation DeleteTask(
       updatedAt
     }
     s3ImageKey
+    taskLocation
     createdAt
     updatedAt
   }

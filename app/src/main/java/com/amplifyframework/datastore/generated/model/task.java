@@ -33,12 +33,14 @@ public final class task implements Model {
   public static final QueryField STATUS = field("task", "status");
   public static final QueryField TASK_TEAM = field("task", "taskTeamId");
   public static final QueryField S3_IMAGE_KEY = field("task", "s3ImageKey");
+  public static final QueryField TASK_LOCATION = field("task", "taskLocation");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="taskStatusEnum") TaskStatusEnum status;
   private final @ModelField(targetType="taskTeam") @BelongsTo(targetName = "taskTeamId", targetNames = {"taskTeamId"}, type = taskTeam.class) taskTeam taskTeam;
   private final @ModelField(targetType="String") String s3ImageKey;
+  private final @ModelField(targetType="String") String taskLocation;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String resolveIdentifier() {
@@ -69,6 +71,10 @@ public final class task implements Model {
       return s3ImageKey;
   }
   
+  public String getTaskLocation() {
+      return taskLocation;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -77,13 +83,14 @@ public final class task implements Model {
       return updatedAt;
   }
   
-  private task(String id, String title, String body, TaskStatusEnum status, taskTeam taskTeam, String s3ImageKey) {
+  private task(String id, String title, String body, TaskStatusEnum status, taskTeam taskTeam, String s3ImageKey, String taskLocation) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.status = status;
     this.taskTeam = taskTeam;
     this.s3ImageKey = s3ImageKey;
+    this.taskLocation = taskLocation;
   }
   
   @Override
@@ -100,6 +107,7 @@ public final class task implements Model {
               ObjectsCompat.equals(getStatus(), task.getStatus()) &&
               ObjectsCompat.equals(getTaskTeam(), task.getTaskTeam()) &&
               ObjectsCompat.equals(getS3ImageKey(), task.getS3ImageKey()) &&
+              ObjectsCompat.equals(getTaskLocation(), task.getTaskLocation()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
       }
@@ -114,6 +122,7 @@ public final class task implements Model {
       .append(getStatus())
       .append(getTaskTeam())
       .append(getS3ImageKey())
+      .append(getTaskLocation())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -130,6 +139,7 @@ public final class task implements Model {
       .append("status=" + String.valueOf(getStatus()) + ", ")
       .append("taskTeam=" + String.valueOf(getTaskTeam()) + ", ")
       .append("s3ImageKey=" + String.valueOf(getS3ImageKey()) + ", ")
+      .append("taskLocation=" + String.valueOf(getTaskLocation()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -155,6 +165,7 @@ public final class task implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -165,7 +176,8 @@ public final class task implements Model {
       body,
       status,
       taskTeam,
-      s3ImageKey);
+      s3ImageKey,
+      taskLocation);
   }
   public interface TitleStep {
     BuildStep title(String title);
@@ -179,6 +191,7 @@ public final class task implements Model {
     BuildStep status(TaskStatusEnum status);
     BuildStep taskTeam(taskTeam taskTeam);
     BuildStep s3ImageKey(String s3ImageKey);
+    BuildStep taskLocation(String taskLocation);
   }
   
 
@@ -189,6 +202,7 @@ public final class task implements Model {
     private TaskStatusEnum status;
     private taskTeam taskTeam;
     private String s3ImageKey;
+    private String taskLocation;
     @Override
      public task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -199,7 +213,8 @@ public final class task implements Model {
           body,
           status,
           taskTeam,
-          s3ImageKey);
+          s3ImageKey,
+          taskLocation);
     }
     
     @Override
@@ -233,6 +248,12 @@ public final class task implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep taskLocation(String taskLocation) {
+        this.taskLocation = taskLocation;
+        return this;
+    }
+    
     /**
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -245,13 +266,14 @@ public final class task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, TaskStatusEnum status, taskTeam taskTeam, String s3ImageKey) {
+    private CopyOfBuilder(String id, String title, String body, TaskStatusEnum status, taskTeam taskTeam, String s3ImageKey, String taskLocation) {
       super.id(id);
       super.title(title)
         .body(body)
         .status(status)
         .taskTeam(taskTeam)
-        .s3ImageKey(s3ImageKey);
+        .s3ImageKey(s3ImageKey)
+        .taskLocation(taskLocation);
     }
     
     @Override
@@ -277,6 +299,11 @@ public final class task implements Model {
     @Override
      public CopyOfBuilder s3ImageKey(String s3ImageKey) {
       return (CopyOfBuilder) super.s3ImageKey(s3ImageKey);
+    }
+    
+    @Override
+     public CopyOfBuilder taskLocation(String taskLocation) {
+      return (CopyOfBuilder) super.taskLocation(taskLocation);
     }
   }
   

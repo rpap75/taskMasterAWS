@@ -5,59 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F9FBE7"
     android:contentDescription="@string/settings_button"
     tools:context=".activities.MainActivity">
 
 
     <Button
-        android:id="@+id/mainActivityLogInButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="68dp"
-        android:text="@string/mainLogInButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/mainActivityAddTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#6D80DEEA"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/addTaskButton"
         android:textColor="#D0E57373"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/mainActivityAllTasksButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="72dp"
-        android:backgroundTint="#6D80DEEA"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="@string/allTasksButton"
-        android:textColor="#D0E57373"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/mainActivityTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="196dp"
-        android:layout_marginTop="72dp"
-        android:fontFamily="@font/vollkorn_sc_semibold"
-        android:text="@string/mainActivityTitle"
-        android:textColor="#9575CD"
-        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityRecyclerViewTasks" />
 
     <ImageView
         android:id="@+id/mainActivitySettingsImageView"
@@ -108,7 +71,7 @@
         android:layout_width="170dp"
         android:layout_height="48dp"
         android:layout_marginStart="108dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="24dp"
         android:text="@string/usernameTextView"
         android:textColor="#9575CD"
         android:textSize="32sp"
@@ -117,43 +80,47 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:fontFamily="@font/vollkorn_sc_semibold" />
 
+    <TextView
+        android:id="@+id/mainActivityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="196dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/vollkorn_sc_semibold"
+        android:text="@string/mainActivityTitle"
+        android:textColor="#9575CD"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mainActivityRecyclerViewTasks"
-        android:layout_width="377dp"
-        android:layout_height="379dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="379dp"
+        android:layout_height="429dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityTeamTextView" />
 
     <TextView
         android:id="@+id/mainActivityTeamTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="42dp"
         android:text="@string/mainTeamTextView"
         android:textColor="@color/black"
         android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/mainActivitySignUpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/mainSignUpButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityTitle" />
 
     <TextView
         android:id="@+id/mainActivityTVNickName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="176dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginStart="328dp"
+        android:layout_marginTop="68dp"
         android:text="@string/nickNameTV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -163,9 +130,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="76dp"
         android:text="@string/logOutButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainActivityAddTaskButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,44 +11,43 @@
         android:id="@+id/signUpActivityTVEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="133dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="4dp"
         android:text="@string/emailTV"
         app:layout_constraintEnd_toStartOf="@+id/SignUpActivityEmailForm"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/signUpActivityTVPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="116dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginTop="300dp"
         android:text="@string/passwordTV"
         app:layout_constraintEnd_toStartOf="@+id/SignUpPasswordForm"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.894"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpActivityTVEmail" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/loginActivitySignUpTVTitle"
-        android:layout_width="48dp"
-        android:layout_height="19dp"
-        android:layout_marginEnd="180dp"
+        android:layout_width="123dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="60dp"
         android:text="@string/SignUpTitle"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/SignUpActivityEmailForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="82dp"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginActivitySignUpTVTitle" />
 
@@ -56,10 +55,11 @@
         android:id="@+id/SignUpPasswordForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="93dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SignUpActivityEmailForm" />
 
@@ -67,7 +67,7 @@
         android:id="@+id/signUpActivitySignUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="140dp"
         android:text="@string/SignUpButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,23 +78,22 @@
         android:id="@+id/signUpActivityTVNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="316dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="4dp"
         android:text="@string/nicknameTV"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/signUpActivityNicknameFormForm"
+        app:layout_constraintTop_toBottomOf="@+id/signUpActivityTVPassword" />
 
     <EditText
         android:id="@+id/signUpActivityNicknameFormForm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginActivitySignUpTVTitle"
-        app:layout_constraintVertical_bias="0.529" />
+        app:layout_constraintTop_toBottomOf="@+id/SignUpPasswordForm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

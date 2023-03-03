@@ -22,6 +22,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     public static final String TASK_STATUS_TAG = "task_status";
     public static final String TASK_TEAM_TAG = "task_team";
     public static final String TASK_IMAGE_KEY_TAG = "task_image_key";
+    public static final String TASK_LOCATION_TAG = "task_location_key";
     Context callingActivity;
 
     List<task> taskList;
@@ -47,13 +48,13 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
 
 //        String taskTitle = taskList.get(position).getTitle();
 //        String taskBody = taskList.get(position).getBody();
-//        String taskStatus = String.valueOf(taskList.get(position).getStatus());
+        String taskStatus = String.valueOf(taskList.get(position).getStatus());
 //        String taskTeam = String.valueOf(taskList.get(position).getTaskTeam().getName());
 //        String taskImage = String.valueOf(taskList.get(position).task.getS3ImageKey());
 
-        tasksFragmentTitleView.setText((position + 1) + ". " + task.getTitle() + "\n" + task.getTaskTeam()
-        );
-//        tasksFragmentStatusView.setText(taskStatus);
+        tasksFragmentTitleView.setText((position + 1) + ". " + task.getTitle());
+        tasksFragmentStatusView.setText(taskStatus);
+
         View taskViewHolder = holder.itemView;
 
         taskViewHolder.setOnClickListener(v -> {
@@ -63,6 +64,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
             goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, task.getStatus());
             goToTaskDetailsIntent.putExtra(TASK_TEAM_TAG, task.getTaskTeam().getName());
             goToTaskDetailsIntent.putExtra(TASK_IMAGE_KEY_TAG, task.getS3ImageKey());
+            goToTaskDetailsIntent.putExtra(TASK_LOCATION_TAG, task.getTaskLocation());
 
             callingActivity.startActivity(goToTaskDetailsIntent);
         });
