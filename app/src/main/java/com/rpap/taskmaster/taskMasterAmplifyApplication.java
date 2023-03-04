@@ -2,7 +2,6 @@ package com.rpap.taskmaster;
 
 import android.app.Application;
 import android.util.Log;
-
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;

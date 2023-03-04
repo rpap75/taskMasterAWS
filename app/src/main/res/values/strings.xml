@@ -57,4 +57,5 @@
     <string name="nickNameTV">NickName</string>
     <string name="logOutButton">Log Out</string>
     <string name="locationTV">Location</string>
+    <string name="editButtonTitle">Edit Title</string>
 </resources>

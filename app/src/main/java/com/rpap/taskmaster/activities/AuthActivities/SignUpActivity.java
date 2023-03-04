@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
@@ -22,7 +21,6 @@ public class SignUpActivity extends AppCompatActivity {
     public final String TAG = "sign_up_activity";
     public static final String USER_EMAIL = "user_email";
 
-    public static final String NICKNAME_TAG = "nickname";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +31,16 @@ public class SignUpActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        String username = preferences.getString(NICKNAME_TAG, "");
-        EditText nicknameEditText = findViewById(R.id.signUpActivityNicknameFormForm);
-        nicknameEditText.setText(username);
-
         }
 
     public void setUpSignUpButton() {
-        EditText nicknameEditText = findViewById(R.id.signUpActivityNicknameFormForm);
+
         findViewById(R.id.signUpActivitySignUpButton).setOnClickListener(view -> {
             String userEmail = ((EditText) findViewById(R.id.SignUpActivityEmailForm)).getText().toString();
             String userPassword = ((EditText) findViewById(R.id.SignUpPasswordForm)).getText().toString();
-            String userNickname = ((EditText) findViewById(R.id.signUpActivityNicknameFormForm)).getText().toString();
 
             SharedPreferences.Editor preferencesEditor = preferences.edit();
-            String usernameString = nicknameEditText.getText().toString();
 
-            preferencesEditor.putString(NICKNAME_TAG, usernameString);
             preferencesEditor.apply();
 
             Amplify.Auth.signUp(
@@ -57,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                     userPassword,
                     AuthSignUpOptions.builder()
                             .userAttribute(AuthUserAttributeKey.email(), userEmail)
-                            .userAttribute(AuthUserAttributeKey.nickname(), userNickname)
+
                             .build(),
                     success -> Log.i(TAG, "Sign Up Success"),
                     failure -> Log.e(TAG, "Sign Up Failed With Email: " + userEmail + failure)
