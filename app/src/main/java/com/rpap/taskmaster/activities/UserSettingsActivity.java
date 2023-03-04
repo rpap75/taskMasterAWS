@@ -2,6 +2,7 @@ package com.rpap.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     public static final String SELECT_TEAM_TAG = "selectTeam";
     public static final String TAG = "settingsActivity";
     public static final String USERNAME_TAG = "username";
+    public static final String NICKNAME_TAG = "nickname";
 
     CompletableFuture<List<taskTeam>> teamFuture = new CompletableFuture<>();
     Spinner teamSpinner;
@@ -42,9 +44,13 @@ public class UserSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        teamSpinner = (Spinner) findViewById(R.id.userSettingsActivityTeamSpinner);
+        teamSpinner = findViewById(R.id.userSettingsActivityTeamSpinner);
         teamNames = new ArrayList<>();
         team = new ArrayList<>();
+
+        String nickName = preferences.getString(NICKNAME_TAG, "");
+        EditText nicknameEditText = findViewById(R.id.userSettingsActivityNicknameFormForm);
+        nicknameEditText.setText(nickName);
 
         Amplify.API.query(
                 ModelQuery.list(taskTeam.class),
@@ -69,11 +75,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             userInputString = callingIntent.getStringExtra(MainActivity.TASK_INPUT_EXTRA_TAG);
         }
 
-        TextView userInputTextView = (TextView) findViewById(R.id.UserSettingsActivityUsernameTextView);
+        TextView userInputTextView = findViewById(R.id.UserSettingsActivityUsernameTextView);
         if (userInputString != null) {
             userInputTextView.setText(userInputString);
         } else {
-            userInputTextView.setText(R.string.usernameTextView);
+            userInputTextView.setText(R.string.userSettingNoInput);
         }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -81,6 +87,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         String username = preferences.getString(USERNAME_TAG, "");
         EditText usernameEditText = findViewById(R.id.userSettingsActivityUsernameEditTextView);
         usernameEditText.setText(username);
+
         setUpSaveButton();
     }
     public void setUpTeamSpinner(){
@@ -92,6 +99,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     }
 
     public void setUpSaveButton() {
+        @SuppressLint("CutPasteId") EditText nicknameEditText = findViewById(R.id.userSettingsActivityNicknameFormForm);
         Button saveButton = findViewById(R.id.userSettingsActivitySaveButton);
         EditText usernameEditText = findViewById(R.id.userSettingsActivityUsernameEditTextView);
         saveButton.setOnClickListener(v -> {
@@ -99,9 +107,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             SharedPreferences.Editor preferencesEditor = preferences.edit();
             String usernameString = usernameEditText.getText().toString();
             String selectTeamName = teamSpinner.getSelectedItem().toString();
+            String nickNameString = nicknameEditText.getText().toString();
 
             preferencesEditor.putString(SELECT_TEAM_TAG, selectTeamName);
             preferencesEditor.putString(USERNAME_TAG, usernameString);
+            preferencesEditor.putString(NICKNAME_TAG, nickNameString);
             preferencesEditor.apply();
 
             Toast.makeText(this, "Settings Saved!", Toast.LENGTH_SHORT).show();

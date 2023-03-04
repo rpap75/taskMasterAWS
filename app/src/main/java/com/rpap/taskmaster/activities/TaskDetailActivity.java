@@ -1,13 +1,14 @@
 package com.rpap.taskmaster.activities;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,7 +21,6 @@ import java.io.File;
 public class TaskDetailActivity extends AppCompatActivity {
     public final static String TAG = "task_details";
 
-    Context callingActivity;
     String taskTitle = null;
     String taskBody = null;
     String taskStatus = null;
@@ -28,6 +28,9 @@ public class TaskDetailActivity extends AppCompatActivity {
     String taskImageKey = null;
     String taskLocation = null;
 
+    TextView textView;
+    AlertDialog dialog;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,48 @@ public class TaskDetailActivity extends AppCompatActivity {
                     failure -> Log.e(TAG, "FAILED! Unable To Get Image From S3 With The Key " + taskImageKey + "with error " + failure)
             );
         }
+
+        //delete function
+//        imageView = findViewById(R.id.taskDetailActivityImageViewImage);
+//        editTitleButton = findViewById(R.id.taskDetailActivityImageDeleteButton);
+//
+//        editTitleButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                imageView.setImageBitmap();
+//            }
+//        });
+
+//
+//        Context context = mapView.getContext();
+//        LinearLayout layout = new LinearLayout(context);
+//        layout.setOrientation(LinearLayout.VERTICAL);
+//
+//        final EditText titleBox = new EditText(context);
+//        titleBox.setHint("Title");
+//        layout.addView(titleBox);
+//
+//        final EditText bodyBox = new EditText(context);
+//        titleBox.setHint("Title");
+//        layout.addView(bodyBox);
+//
+//        dialog.setView(layout);
+
+
+//        textView = (TextView) findViewById(R.id.taskDetailActivityBody);
+
+        textView = findViewById(R.id.taskDetailActivityTitle);
+        dialog = new AlertDialog.Builder(this).create();
+        editText = new EditText(this);
+
+        dialog.setTitle("Edit Text");
+        dialog.setView(editText);
+
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Save Text", (dialog, which) -> textView.setText(editText.getText()));
+        textView.setOnClickListener(v -> {
+            editText.setText(textView.getText());
+            dialog.show();
+        });
     }
 
     public void consumeExtras() {
@@ -66,4 +111,3 @@ public class TaskDetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.taskDetailActivityLocationTV)).setText(taskLocation);
     }
 }
-

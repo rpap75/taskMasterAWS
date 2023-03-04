@@ -1,13 +1,13 @@
 package com.rpap.taskmaster.activities;
 
-import static com.rpap.taskmaster.activities.AuthActivities.SignUpActivity.NICKNAME_TAG;
+import static com.rpap.taskmaster.activities.UserSettingsActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
-import static com.rpap.taskmaster.adapter.taskRecyclerViewAdapter.TASK_LOCATION_TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,17 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
-import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
-import com.rpap.taskmaster.activities.AuthActivities.SignUpActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
 
+    AuthUser authUser;
+    Button logoutButton;
     List<task> taskList;
     taskRecyclerViewAdapter adapter;
 
@@ -52,11 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        logoutButton = findViewById(R.id.mainActivityButtonLogOut);
+
         setupButtons();
         setUpRecyclerView();
 
-        }
+    }
 
+    @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
     @Override
     protected void onResume() {
         super.onResume();
@@ -69,9 +70,8 @@ public class MainActivity extends AppCompatActivity {
                     taskList.clear();
                     Log.i(TAG, "Read Tasks Successfully");
                     for (task databaseTask : success.getData()) {
-                        String selectedTeamName = selectedTeam;
                         if (databaseTask.getTaskTeam() != null) {
-                            if (databaseTask.getTaskTeam().getName().equals(selectedTeamName)) {
+                            if (databaseTask.getTaskTeam().getName().equals(selectedTeam)) {
                                 taskList.add(databaseTask);
                             }
                         }
@@ -85,11 +85,22 @@ public class MainActivity extends AppCompatActivity {
         String username = preferences.getString(USERNAME_TAG, "no username");
 
         ((TextView) findViewById(R.id.mainActivityUsernameTextView)).setText(username + "'s");
-        ((TextView)findViewById(R.id.mainActivityTeamTextView)).setText(selectedTeam);
+        ((TextView) findViewById(R.id.mainActivityTeamTextView)).setText(selectedTeam);
 
 
         String nickname = preferences.getString(NICKNAME_TAG, "no nickname");
         ((TextView) findViewById(R.id.mainActivityTVNickName)).setText(nickname);
+
+    }
+
+    public void renderButtons() {
+
+        if (authUser != null) {
+            logoutButton.setVisibility(View.VISIBLE);
+        } else {
+
+            logoutButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void setUpRecyclerView() {
@@ -104,21 +115,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setupButtons() {
-        final String[] nickname = {preferences.getString(NICKNAME_TAG, "no nickname")};
         final String[] username = {preferences.getString(USERNAME_TAG, "no username")};
 //Add Task
-        Button addTaskIntentButton = (Button) findViewById(R.id.mainActivityAddTaskButton);
+        Button addTaskIntentButton = findViewById(R.id.mainActivityAddTaskButton);
         addTaskIntentButton.setOnClickListener(v -> {
             Intent goToAddTaskIntent = new Intent(this, AddTaskActivity.class);
             startActivity(goToAddTaskIntent);
         });
-//        Button allTasksIntentButton = (Button) findViewById(R.id.mainActivityAllTasksButton);
-//        allTasksIntentButton.setOnClickListener(v -> {
-//            Intent goToAllTasksIntent = new Intent(this, AllTasksActivity.class);
-//            startActivity(goToAllTasksIntent);
-//        });
 
-        ImageView settingsButton = (ImageView) findViewById(R.id.mainActivitySettingsImageView);
+        ImageView settingsButton = findViewById(R.id.mainActivitySettingsImageView);
         settingsButton.setOnClickListener(v -> {
             Intent goToSettingsIntent = new Intent(this, UserSettingsActivity.class);
             startActivity(goToSettingsIntent);
@@ -129,43 +134,16 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "Got Current User");
                     username[0] = success.getUsername();
                 },
-                failure -> {}
+                failure -> {
+                }
         );
 
-
-//        logoutButton.setOnClickListener(v -> {
-//            Amplify.Auth.signOut(
-//                    success -> {
-//                        Log.i(TAG, "User successfully logged out.");
-//                        authUser = null;
-//                        runOnUiThread(this::renderButtons);
-//                    }
-//            );
-//        });
-
-//        if (username[0].equals("")) {
-//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.VISIBLE);
-//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.VISIBLE);
-////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.INVISIBLE);
-//            // hide log out button
-//        } else {
-//            ((Button)findViewById(R.id.mainActivitySignUpButton)).setVisibility(View.INVISIBLE);
-//            ((Button)findViewById(R.id.mainActivityLogInButton)).setVisibility(View.INVISIBLE);
-////            ((Button)findViewById(R.id.mainActivityButtonLogOut)).setVisibility(View.VISIBLE);
-//        }
-//
-//        //Login
-//        findViewById(R.id.mainActivityLogInButton).setOnClickListener(v -> {
-//            Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
-//            startActivity(goToLoginActivityIntent);
-//        });
-//
-//        //Sign Up
-//        findViewById(R.id.mainActivitySignUpButton).setOnClickListener(v -> {
-//            Intent goToSignUpActivityIntent = new Intent(this, SignUpActivity.class);
-//            startActivity(goToSignUpActivityIntent);
-//        });
-
-
+        logoutButton.setOnClickListener(v -> Amplify.Auth.signOut(
+                success -> {
+                    Log.i(TAG, "User successfully logged out.");
+                    authUser = null;
+                    runOnUiThread(this::renderButtons);
+                }
+        ));
     }
 }

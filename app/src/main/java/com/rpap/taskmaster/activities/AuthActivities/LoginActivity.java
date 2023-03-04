@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 import com.amplifyframework.core.Amplify;
 import com.rpap.taskmaster.R;
-import com.rpap.taskmaster.activities.AddTaskActivity;
 import com.rpap.taskmaster.activities.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,14 +29,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setUpLoginButton() {
 
-        Button addTaskIntentButton = (Button) findViewById(R.id.logInActivitySignUpButton);
+        Button addTaskIntentButton = findViewById(R.id.logInActivitySignUpButton);
         addTaskIntentButton.setOnClickListener(v -> {
             Intent goToAddTaskIntent = new Intent(this, SignUpActivity.class);
             startActivity(goToAddTaskIntent);
         });
 
         findViewById(R.id.logInActivityLogInButton).setOnClickListener(v -> {
-            if (callingActivity != null) {
+            if (callingActivity != null && callingActivity.getStringExtra(SignUpActivity.USER_EMAIL)!= null) {
                 userEmail = callingActivity.getStringExtra(SignUpActivity.USER_EMAIL);
                 ((EditText)findViewById(R.id.logInActivityEmailForm)).setText(userEmail);
             } else {

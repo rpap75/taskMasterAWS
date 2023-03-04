@@ -1,15 +1,14 @@
 package com.rpap.taskmaster.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.activities.TaskDetailActivity;
@@ -23,8 +22,8 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     public static final String TASK_TEAM_TAG = "task_team";
     public static final String TASK_IMAGE_KEY_TAG = "task_image_key";
     public static final String TASK_LOCATION_TAG = "task_location_key";
-    Context callingActivity;
 
+    Context callingActivity;
     List<task> taskList;
 
     public taskRecyclerViewAdapter(List<task> taskList, Context callingActivity) {
@@ -39,6 +38,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
         return new taskViewHolder(taskFragment);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull taskViewHolder holder, int position) {
         TextView tasksFragmentTitleView = holder.itemView.findViewById(R.id.tasksFragmentTextViewTitle);
@@ -46,11 +46,7 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
 
         task task = taskList.get(position);
 
-//        String taskTitle = taskList.get(position).getTitle();
-//        String taskBody = taskList.get(position).getBody();
         String taskStatus = String.valueOf(taskList.get(position).getStatus());
-//        String taskTeam = String.valueOf(taskList.get(position).getTaskTeam().getName());
-//        String taskImage = String.valueOf(taskList.get(position).task.getS3ImageKey());
 
         tasksFragmentTitleView.setText((position + 1) + ". " + task.getTitle());
         tasksFragmentStatusView.setText(taskStatus);
