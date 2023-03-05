@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayoutTitleStatus"
     android:layout_width="400dp"
@@ -23,8 +24,8 @@
 
     <TextView
         android:id="@+id/tasksFragmentTextViewTitle"
-        android:layout_width="106dp"
-        android:layout_height="66dp"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-smallcaps"
@@ -35,8 +36,8 @@
 
     <TextView
         android:id="@+id/tasksFragmentTextViewStatus"
-        android:layout_width="129dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="57dp"
         android:layout_marginStart="200dp"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-smallcaps"
@@ -44,4 +45,12 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/taskDeleteButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="330dp"
+        android:src="@drawable/baseline_delete_24" />
+
 </FrameLayout>

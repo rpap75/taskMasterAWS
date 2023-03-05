@@ -213,6 +213,7 @@ public class AddTaskActivity extends AppCompatActivity {
         }
 
         taskTeam selectedTeam = taskTeamArrayList.stream().filter(team -> team.getName().equals(selectedTaskTeamStringName)).findAny().orElseThrow(RuntimeException::new);
+
         task newTask = task.builder()
                 .title(((EditText) findViewById(R.id.addTaskActivityTaskTitleInput)).getText().toString())
                 .body(((EditText) findViewById(R.id.addTaskActivityTaskDescriptionInput)).getText().toString())

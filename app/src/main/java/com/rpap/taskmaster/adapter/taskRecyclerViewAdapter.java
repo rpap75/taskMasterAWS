@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,8 +24,18 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     public static final String TASK_IMAGE_KEY_TAG = "task_image_key";
     public static final String TASK_LOCATION_TAG = "task_location_key";
 
+    private OnItemClickListener listener;
+
     Context callingActivity;
     List<task> taskList;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener clickListener){
+        listener = clickListener;
+    }
 
     public taskRecyclerViewAdapter(List<task> taskList, Context callingActivity) {
         this.taskList = taskList;
@@ -35,7 +46,10 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
     @Override
     public taskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View taskFragment = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_tasks, parent, false);
-        return new taskViewHolder(taskFragment);
+
+
+
+        return new taskViewHolder(taskFragment, listener);
     }
 
     @SuppressLint("SetTextI18n")
@@ -57,13 +71,14 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
             Intent goToTaskDetailsIntent = new Intent(callingActivity, TaskDetailActivity.class);
             goToTaskDetailsIntent.putExtra(TASK_TITLE_TAG, task.getTitle());
             goToTaskDetailsIntent.putExtra(TASK_BODY_TAG, task.getBody());
-            goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, task.getStatus());
+            goToTaskDetailsIntent.putExtra(TASK_STATUS_TAG, task.getStatus().toString());
             goToTaskDetailsIntent.putExtra(TASK_TEAM_TAG, task.getTaskTeam().getName());
             goToTaskDetailsIntent.putExtra(TASK_IMAGE_KEY_TAG, task.getS3ImageKey());
             goToTaskDetailsIntent.putExtra(TASK_LOCATION_TAG, task.getTaskLocation());
 
             callingActivity.startActivity(goToTaskDetailsIntent);
         });
+
     }
 
     @Override
@@ -71,10 +86,20 @@ public class taskRecyclerViewAdapter extends RecyclerView.Adapter<taskRecyclerVi
         return taskList.size();
     }
 
-    public static class taskViewHolder extends RecyclerView.ViewHolder {
+    public class taskViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageView;
 
-        public taskViewHolder(@NonNull View itemView) {
+        public taskViewHolder(@NonNull View itemView,OnItemClickListener listener) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.taskDeleteButton);
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(getAdapterPosition());
+                }
+            });
         }
     }
+
 }
