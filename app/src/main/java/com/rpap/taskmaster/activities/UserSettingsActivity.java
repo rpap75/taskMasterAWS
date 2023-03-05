@@ -31,8 +31,8 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     public static final String SELECT_TEAM_TAG = "selectTeam";
     public static final String TAG = "settingsActivity";
-    public static final String USERNAME_TAG = "username";
-    public static final String NICKNAME_TAG = "nickname";
+    public static final String USERNAME_TAG = "Username";
+    public static final String NICKNAME_TAG = "Nickname";
 
     CompletableFuture<List<taskTeam>> teamFuture = new CompletableFuture<>();
     Spinner teamSpinner;
@@ -79,7 +79,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         if (userInputString != null) {
             userInputTextView.setText(userInputString);
         } else {
-            userInputTextView.setText(R.string.userSettingNoInput);
+            userInputTextView.setText(USERNAME_TAG);
         }
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);

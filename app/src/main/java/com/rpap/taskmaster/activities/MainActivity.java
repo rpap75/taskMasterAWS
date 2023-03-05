@@ -23,6 +23,7 @@ import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
 import com.rpap.taskmaster.R;
+import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
@@ -51,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         logoutButton = findViewById(R.id.mainActivityButtonLogOut);
+
+//        adapter.setOnItemClickListener(new taskRecyclerViewAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(int position) {
+//                taskList.remove(position);
+//                adapter.notifyItemChanged(position);
+//            }
+//        });
 
         setupButtons();
         setUpRecyclerView();
@@ -90,6 +99,15 @@ public class MainActivity extends AppCompatActivity {
 
         String nickname = preferences.getString(NICKNAME_TAG, "no nickname");
         ((TextView) findViewById(R.id.mainActivityTVNickName)).setText(nickname);
+
+
+        adapter.setOnItemClickListener(new taskRecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                taskList.remove(position);
+                adapter.notifyItemChanged(position);
+            }
+        });
 
     }
 
@@ -143,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, "User successfully logged out.");
                     authUser = null;
                     runOnUiThread(this::renderButtons);
+                    Intent goToLoginActivityIntent = new Intent(this, LoginActivity.class);
+                    startActivity(goToLoginActivityIntent);
                 }
         ));
     }
