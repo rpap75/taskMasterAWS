@@ -6,10 +6,12 @@ import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.work.Data;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.SettingInjectorService;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
@@ -28,6 +31,7 @@ import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         logoutButton = findViewById(R.id.mainActivityButtonLogOut);
+
+      int dateNow = new Date().getDate();
+
+        AnalyticsEvent appStartedEvent = AnalyticsEvent.builder()
+                .name("Application Started")
+                .addProperty("Username", "rpapsin")
+                .addProperty("TimeOfLaunch", dateNow)
+                .build();
+
+        Amplify.Analytics.recordEvent(appStartedEvent);
 
 //        adapter.setOnItemClickListener(new taskRecyclerViewAdapter.OnItemClickListener() {
 //            @Override

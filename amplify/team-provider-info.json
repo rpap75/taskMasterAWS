@@ -20,6 +20,9 @@
       },
       "storage": {
         "s372895eeb": {}
+      },
+      "analytics": {
+        "taskmaster": {}
       }
     }
   }
