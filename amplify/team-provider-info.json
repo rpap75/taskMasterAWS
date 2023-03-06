@@ -23,6 +23,9 @@
       },
       "analytics": {
         "taskmaster": {}
+      },
+      "predictions": {
+        "speechGenerator8449b3b4": {}
       }
     }
   }

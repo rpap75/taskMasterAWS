@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.SettingInjectorService;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -30,6 +31,12 @@ import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     List<task> taskList;
     taskRecyclerViewAdapter adapter;
 
+    private final MediaPlayer mp = new MediaPlayer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,17 +75,33 @@ public class MainActivity extends AppCompatActivity {
 
         Amplify.Analytics.recordEvent(appStartedEvent);
 
-//        adapter.setOnItemClickListener(new taskRecyclerViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                taskList.remove(position);
-//                adapter.notifyItemChanged(position);
-//            }
-//        });
+        Amplify.Predictions.convertTextToSpeech(
+                "I like to eat spaghetti",
+                result -> playAudio(result.getAudioData()),
+                error -> Log.e("MyAmplifyApp", "Conversion failed", error)
+        );
 
         setupButtons();
         setUpRecyclerView();
 
+    }
+
+    private void playAudio(InputStream data) {
+        File mp3File = new File(getCacheDir(), "audio.mp3");
+
+        try (OutputStream out = new FileOutputStream(mp3File)) {
+            byte[] buffer = new byte[8 * 1_024];
+            int bytesRead;
+            while ((bytesRead = data.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+            mp.reset();
+            mp.setOnPreparedListener(MediaPlayer::start);
+            mp.setDataSource(new FileInputStream(mp3File).getFD());
+            mp.prepareAsync();
+        } catch (IOException error) {
+            Log.e("MyAmplifyApp", "Error writing audio file", error);
+        }
     }
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
