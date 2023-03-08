@@ -104,13 +104,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
     private void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(location -> {
@@ -139,7 +132,7 @@ public class AddTaskActivity extends AppCompatActivity {
             if (location == null) {
                 Log.e(TAG, "Location Callback Was Null");
             }
-//            assert location != null;
+
             assert location != null;
             String currentLatitude = Double.toString(location.getLatitude());
             String currentLongitude = Double.toString(location.getLongitude());
@@ -152,7 +145,6 @@ public class AddTaskActivity extends AppCompatActivity {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(5 * 1000);
         locationRequest.setPriority(Priority.PRIORITY_HIGH_ACCURACY);
-
 
         LocationCallback locationCallback = new LocationCallback() {
             @Override
@@ -175,13 +167,7 @@ public class AddTaskActivity extends AppCompatActivity {
             }
         };
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, getMainLooper());

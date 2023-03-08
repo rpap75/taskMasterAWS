@@ -3,15 +3,14 @@ package com.rpap.taskmaster.activities;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.Data;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.SettingInjectorService;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,10 +25,17 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
-
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,6 +50,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
     public static final String TAG = "mainActivity";
     public static final String TASK_INPUT_EXTRA_TAG = "userTask";
     public static final String SELECT_TEAM_TAG = "selectTeam";
@@ -56,16 +64,54 @@ public class MainActivity extends AppCompatActivity {
     taskRecyclerViewAdapter adapter;
 
     private final MediaPlayer mp = new MediaPlayer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        //Banner Ad
+//        mAdView = findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
+        //Interstitial Ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d(TAG, loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+
+        findViewById(R.id.adButton).setOnClickListener(v -> {
+            callAd();
+        });
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         logoutButton = findViewById(R.id.mainActivityButtonLogOut);
 
-      int dateNow = new Date().getDate();
+        int dateNow = new Date().getDate();
 
         AnalyticsEvent appStartedEvent = AnalyticsEvent.builder()
                 .name("Application Started")
@@ -84,6 +130,13 @@ public class MainActivity extends AppCompatActivity {
         setupButtons();
         setUpRecyclerView();
 
+    }
+    public void callAd(){
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(this);
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
     }
 
     private void playAudio(InputStream data) {
@@ -154,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
         if (authUser != null) {
             logoutButton.setVisibility(View.VISIBLE);
         } else {
-
             logoutButton.setVisibility(View.INVISIBLE);
         }
     }

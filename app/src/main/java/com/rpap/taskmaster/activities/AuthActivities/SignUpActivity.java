@@ -1,14 +1,11 @@
 package com.rpap.taskmaster.activities.AuthActivities;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.EditText;
-
 import com.amplifyframework.auth.AuthUserAttributeKey;
 import com.amplifyframework.auth.options.AuthSignUpOptions;
 import com.amplifyframework.core.Amplify;
@@ -20,7 +17,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     public final String TAG = "sign_up_activity";
     public static final String USER_EMAIL = "user_email";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

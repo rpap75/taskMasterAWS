@@ -10,7 +10,6 @@ import com.rpap.taskmaster.R;
 public class taskFragmentTitleStatus extends Fragment {
 
     public taskFragmentTitleStatus() {
-        // Required empty public constructor
     }
 
     @Override
@@ -21,7 +20,6 @@ public class taskFragmentTitleStatus extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tasks, container, false);
     }
 }
