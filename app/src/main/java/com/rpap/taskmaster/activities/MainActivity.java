@@ -3,6 +3,7 @@ package com.rpap.taskmaster.activities;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.NICKNAME_TAG;
 import static com.rpap.taskmaster.activities.UserSettingsActivity.USERNAME_TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -18,21 +20,38 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.analytics.AnalyticsEvent;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.task;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.activities.AuthActivities.LoginActivity;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
 
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private InterstitialAd mInterstitialAd;
+    private AdView mAdView;
     public static final String TAG = "mainActivity";
     public static final String TASK_INPUT_EXTRA_TAG = "userTask";
     public static final String SELECT_TEAM_TAG = "selectTeam";
@@ -44,26 +63,98 @@ public class MainActivity extends AppCompatActivity {
     List<task> taskList;
     taskRecyclerViewAdapter adapter;
 
+    private final MediaPlayer mp = new MediaPlayer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+
+            }
+        });
+
+        //Banner Ad
+//        mAdView = findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
+        //Interstitial Ad
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        // The mInterstitialAd reference will be null until
+                        // an ad is loaded.
+                        mInterstitialAd = interstitialAd;
+                        Log.i(TAG, "onAdLoaded");
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Log.d(TAG, loadAdError.toString());
+                        mInterstitialAd = null;
+                    }
+                });
+
+        findViewById(R.id.adButton).setOnClickListener(v -> {
+            callAd();
+        });
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         logoutButton = findViewById(R.id.mainActivityButtonLogOut);
 
-//        adapter.setOnItemClickListener(new taskRecyclerViewAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(int position) {
-//                taskList.remove(position);
-//                adapter.notifyItemChanged(position);
-//            }
-//        });
+        int dateNow = new Date().getDate();
+
+        AnalyticsEvent appStartedEvent = AnalyticsEvent.builder()
+                .name("Application Started")
+                .addProperty("Username", "rpapsin")
+                .addProperty("TimeOfLaunch", dateNow)
+                .build();
+
+        Amplify.Analytics.recordEvent(appStartedEvent);
+
+        Amplify.Predictions.convertTextToSpeech(
+                "I like to eat spaghetti",
+                result -> playAudio(result.getAudioData()),
+                error -> Log.e("MyAmplifyApp", "Conversion failed", error)
+        );
 
         setupButtons();
         setUpRecyclerView();
 
+    }
+    public void callAd(){
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(this);
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
+    }
+
+    private void playAudio(InputStream data) {
+        File mp3File = new File(getCacheDir(), "audio.mp3");
+
+        try (OutputStream out = new FileOutputStream(mp3File)) {
+            byte[] buffer = new byte[8 * 1_024];
+            int bytesRead;
+            while ((bytesRead = data.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesRead);
+            }
+            mp.reset();
+            mp.setOnPreparedListener(MediaPlayer::start);
+            mp.setDataSource(new FileInputStream(mp3File).getFD());
+            mp.prepareAsync();
+        } catch (IOException error) {
+            Log.e("MyAmplifyApp", "Error writing audio file", error);
+        }
     }
 
     @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -116,7 +207,6 @@ public class MainActivity extends AppCompatActivity {
         if (authUser != null) {
             logoutButton.setVisibility(View.VISIBLE);
         } else {
-
             logoutButton.setVisibility(View.INVISIBLE);
         }
     }

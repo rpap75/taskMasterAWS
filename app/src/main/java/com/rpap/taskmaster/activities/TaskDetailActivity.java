@@ -1,32 +1,24 @@
 package com.rpap.taskmaster.activities;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.generated.model.TaskStatusEnum;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.adapter.taskRecyclerViewAdapter;
-
 import java.io.File;
 
 public class TaskDetailActivity extends AppCompatActivity {
     public final static String TAG = "task_details";
 
-
-//    Spinner taskStatusSpinner;
     String taskTitle = null;
     String taskBody = null;
     String taskStatus = null;
@@ -38,19 +30,12 @@ public class TaskDetailActivity extends AppCompatActivity {
     AlertDialog titleDialog;
     EditText titleEditText;
 
-    TextView statusTextView;
-    AlertDialog statusDialog;
-    Spinner statusSpinner;
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
         consumeExtras();
-
-//        taskStatusSpinner = findViewById(R.id.taskStatusSpinner);
-
 
         if (taskImageKey != null && !taskImageKey.isEmpty()) {
             Amplify.Storage.downloadFile(
@@ -64,51 +49,6 @@ public class TaskDetailActivity extends AppCompatActivity {
                     failure -> Log.e(TAG, "FAILED! Unable To Get Image From S3 With The Key " + taskImageKey + "with error " + failure)
             );
         }
-        //delete function
-//        imageView = findViewById(R.id.taskDetailActivityImageViewImage);
-//        editTitleButton = findViewById(R.id.taskDetailActivityImageDeleteButton);
-//
-//        editTitleButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                imageView.setImageBitmap();
-//            }
-//        });
-
-//
-//        Context context = mapView.getContext();
-//        LinearLayout layout = new LinearLayout(context);
-//        layout.setOrientation(LinearLayout.VERTICAL);
-//
-//        final EditText titleBox = new EditText(context);
-//        titleBox.setHint("Title");
-//        layout.addView(titleBox);
-//
-//        final EditText bodyBox = new EditText(context);
-//        titleBox.setHint("Title");
-//        layout.addView(bodyBox);
-//
-//        dialog.setView(layout);
-
-
-//        textView = (TextView) findViewById(R.id.taskDetailActivityBody);
-
-
-//        statusTextView = findViewById(R.id.taskDetailActivityStatus);
-//        statusDialog = new AlertDialog.Builder(this).create();
-//        statusSpinner = new Spinner(this);
-//
-//        statusDialog.setTitle("Edit Text");
-//        statusDialog.setView(titleEditText);
-//
-//        statusDialog.setButton(DialogInterface.BUTTON_POSITIVE, "Save Text", (dialog, which) -> statusTextView.setText(statusSpinner.getText()));
-//        statusTextView.setOnClickListener(v -> {
-//            statusSpinner.setAdapter(statusTextView.getText());
-//            statusDialog.show();
-//        });
-
-
-
 
         titleTextView = findViewById(R.id.taskDetailActivityTitle);
         titleDialog = new AlertDialog.Builder(this).create();
@@ -122,17 +62,8 @@ public class TaskDetailActivity extends AppCompatActivity {
             titleEditText.setText(titleTextView.getText());
             titleDialog.show();
         });
-//        setUpSpinners();
 
     }
-
-//    public void setUpSpinners() {
-//        taskStatusSpinner.setAdapter(new ArrayAdapter<>(
-//                this,
-//                android.R.layout.simple_spinner_item,
-//                TaskStatusEnum.values()
-//        ));
-//    }
 
     public void consumeExtras() {
         Intent callingIntent = getIntent();

@@ -1,13 +1,10 @@
 package com.rpap.taskmaster.activities.AuthActivities;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.amplifyframework.core.Amplify;
 import com.rpap.taskmaster.R;
 import com.rpap.taskmaster.activities.MainActivity;
@@ -22,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         callingActivity = getIntent();
-
 
         setUpLoginButton();
     }
